@@ -7,7 +7,7 @@ import { ReactNode } from "react";
 import { HTTP } from "./HTTP";
 
 const Request = (): ReactNode => (
-    <section className="grow border-solid border-l-[1px] border-r-[1px] border-gray-40">
+    <section className="grow border-solid border-l-[1px] border-r-[1px] border-gray-40 overflow-hidden">
         <HTTP />
         <Params />
         <Body />

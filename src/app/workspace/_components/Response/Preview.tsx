@@ -17,7 +17,7 @@ const customDraculaTheme = {
     ],
 };
 
-const JSON = (): ReactNode => (
+const Preview = (): ReactNode => (
     <div className="w-full h-max overflow-hidden">
         <JSONEditor
             options={customDraculaTheme}
@@ -28,4 +28,4 @@ const JSON = (): ReactNode => (
     </div>
 );
 
-export { JSON };
+export { Preview };
