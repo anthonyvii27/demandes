@@ -1,26 +1,32 @@
 import { Section } from "@/app/workspace/_components/Request/_components/Section";
-import { InputField } from "@/app/workspace/_components/Request/Params/InputField";
-import { UrlPreview } from "@/app/workspace/_components/Request/Params/UrlPreview";
+import { InputField } from "@/app/workspace/_components/Request/Headers/InputField";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ReactElement, useState } from "react";
 import shortid from "shortid";
 
 export type FieldSchema = {
     id: string;
-    name: string;
+    header: string;
     value: string;
     checked: boolean;
 };
 
-const Params = (): ReactElement => {
-    const [fields, setFields] = useState<FieldSchema[] | []>([]);
+const Headers = (): ReactElement => {
+    const [fields, setFields] = useState<FieldSchema[] | []>([
+        {
+            id: shortid.generate(),
+            header: "UserAgent",
+            value: "demandes",
+            checked: true,
+        },
+    ]);
 
     const handleAddField = (): void => {
         setFields(prevState => [
             ...prevState,
             {
                 id: shortid.generate(),
-                name: "",
+                header: "",
                 value: "",
                 checked: true,
             },
@@ -35,9 +41,8 @@ const Params = (): ReactElement => {
 
     return (
         <Section>
-            <UrlPreview>https://api.example.com/v1/api/users/1?name=John&age=30</UrlPreview>
             <div className="flex justify-between items-center">
-                <SectionTitle>QUERY PARAMETERS</SectionTitle>
+                <SectionTitle>HEADERS</SectionTitle>
 
                 <div className="flex items-center gap-[10px]">
                     <button
@@ -62,4 +67,4 @@ const Params = (): ReactElement => {
     );
 };
 
-export { Params };
+export { Headers };

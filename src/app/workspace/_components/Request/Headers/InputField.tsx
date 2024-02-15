@@ -3,15 +3,15 @@ import { Input } from "@/components/ui/Input";
 import { ReactNode } from "react";
 import { MdDeleteForever } from "react-icons/md";
 
-import type { FieldSchema } from "./Params";
+import { FieldSchema } from "./Headers";
 
 type Props = FieldSchema & {
     handleDeleteField: (id: string) => void;
 };
 
-const InputField = ({ id, name, value, checked, handleDeleteField }: Props): ReactNode => (
+const InputField = ({ id, header, value, checked, handleDeleteField }: Props): ReactNode => (
     <div className="flex gap-[10px] items-center" key={id}>
-        <Input type="text" placeholder="Name" defaultValue={name} />
+        <Input type="text" placeholder="Header" defaultValue={header} />
         <Input type="text" placeholder="Value" defaultValue={value} />
         <Checkbox defaultChecked={checked} />
         <button
