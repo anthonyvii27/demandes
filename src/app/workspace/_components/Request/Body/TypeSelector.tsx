@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./Select";
 
 const TypeSelector = (): ReactElement => (
-    <Select>
+    <Select defaultValue="json">
         <SelectTrigger>
             <SelectValue />
         </SelectTrigger>

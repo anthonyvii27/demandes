@@ -7,18 +7,20 @@ import { ReactNode } from "react";
 type Props = {
     initialValue: string;
     readonly?: boolean;
+    height?: string;
     options?: Partial<CreateThemeOptions>;
 };
 
 const JSONEditor = ({
     initialValue,
     readonly,
+    height = "max-content",
     options = Object.create(null),
 }: Props): ReactNode => (
     <CodeMirror
         value={initialValue}
         width="100%"
-        height="max-content"
+        height={height}
         style={{ flexGrow: 1 }}
         theme={draculaInit(options)}
         onChange={(code: string) => console.log(code)}
