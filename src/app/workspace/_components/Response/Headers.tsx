@@ -13,7 +13,7 @@ const Headers = (): ReactNode => (
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>NAME</TableHead>
+                    <TableHead className="w-30">NAME</TableHead>
                     <TableHead>VALUE</TableHead>
                 </TableRow>
             </TableHeader>
@@ -35,7 +35,7 @@ const Headers = (): ReactNode => (
                     <TableCell className="text-lighter-gray">247</TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell className="font-semibold">cf-cache-status </TableCell>
+                    <TableCell className="font-semibold">cf-cache-status</TableCell>
                     <TableCell className="text-lighter-gray">DYNAMIC</TableCell>
                 </TableRow>
             </TableBody>
