@@ -6,7 +6,7 @@ import { HttpMethodSelector } from "./HTTPMethodSelector";
 import { InputField } from "./InputField";
 
 const HTTP = (): ReactNode => (
-    <div className="w-full h-[40px] bg-gray-80 flex border-solid border-b-[1px] border-b-gray-40 items-center justify-between pr-[3px]">
+    <div className="w-full h-[40px] bg-gray-80 flex border-solid border-b-[1px] border-b-gray-40 items-center justify-between pr-[4px]">
         <HttpMethodSelector />
         <InputField />
         <Button>

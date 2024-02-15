@@ -1,5 +1,5 @@
-import { Auth } from "@/app/workspace/_components/Request/Auth";
-import { Body } from "@/app/workspace/_components/Request/Body";
+import { Auth } from "@/app/workspace/_components/Request/Auth/Auth";
+import { Body } from "@/app/workspace/_components/Request/Body/Body";
 import { Headers } from "@/app/workspace/_components/Request/Headers";
 import { Params } from "@/app/workspace/_components/Request/Params";
 import { ReactNode } from "react";
