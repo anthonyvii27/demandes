@@ -1,9 +1,11 @@
+import { Section } from "@/app/workspace/_components/Request/_components/Section";
+import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ReactElement } from "react";
 
 const Body = (): ReactElement => (
-    <div className="w-full h-max border-solid border-b-[1px] border-gray-40">
-        <div className="h-[100px]">Body</div>
-    </div>
+    <Section>
+        <SectionTitle>BODY</SectionTitle>
+    </Section>
 );
 
 export { Body };
