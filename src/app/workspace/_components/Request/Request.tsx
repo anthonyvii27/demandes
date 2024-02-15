@@ -1,7 +1,7 @@
-import { Auth } from "@/app/demandes/_components/Request/Auth";
-import { Body } from "@/app/demandes/_components/Request/Body";
-import { Headers } from "@/app/demandes/_components/Request/Headers";
-import { Params } from "@/app/demandes/_components/Request/Params";
+import { Auth } from "@/app/workspace/_components/Request/Auth";
+import { Body } from "@/app/workspace/_components/Request/Body";
+import { Headers } from "@/app/workspace/_components/Request/Headers";
+import { Params } from "@/app/workspace/_components/Request/Params";
 import { ReactNode } from "react";
 
 import { HTTP } from "./HTTP";

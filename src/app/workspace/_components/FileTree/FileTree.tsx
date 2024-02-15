@@ -1,5 +1,5 @@
-import { Environment } from "@/app/demandes/_components/FileTree/Environment";
-import { Tree } from "@/app/demandes/_components/FileTree/Tree";
+import { Environment } from "@/app/workspace/_components/FileTree/Environment";
+import { Tree } from "@/app/workspace/_components/FileTree/Tree";
 import { ReactNode } from "react";
 
 const FileTree = (): ReactNode => (

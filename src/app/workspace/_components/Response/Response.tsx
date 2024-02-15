@@ -1,4 +1,4 @@
-import { Status } from "@/app/demandes/_components/Response/Status";
+import { Status } from "@/app/workspace/_components/Response/Status";
 import { ReactNode } from "react";
 
 const Response = (): ReactNode => (
