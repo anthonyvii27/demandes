@@ -9,6 +9,7 @@ const Response = (): ReactNode => (
         <Tabs />
         {/* <Preview /> */}
         <Headers />
+        {/* <Cookies /> */}
     </section>
 );
 

@@ -9,7 +9,7 @@ import {
 import { ReactNode } from "react";
 
 const Headers = (): ReactNode => (
-    <div className="w-full h-max overflow-x-hidden overflow-y-scroll">
+    <div className="w-full h-[calc(100vh-160px)] overflow-x-hidden overflow-y-scroll">
         <Table>
             <TableHeader>
                 <TableRow>
