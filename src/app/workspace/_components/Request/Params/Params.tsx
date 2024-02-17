@@ -3,7 +3,7 @@ import { InputField } from "@/app/workspace/_components/Request/Params/InputFiel
 import { UrlPreview } from "@/app/workspace/_components/Request/Params/UrlPreview";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ReactElement, useState } from "react";
-import shortid from "shortid";
+import shortID from "shortid";
 
 export type FieldSchema = {
     id: string;
@@ -19,7 +19,7 @@ const Params = (): ReactElement => {
         setFields(prevState => [
             ...prevState,
             {
-                id: shortid.generate(),
+                id: shortID.generate(),
                 name: "",
                 value: "",
                 checked: true,

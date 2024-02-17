@@ -1,11 +1,12 @@
-import { FileTree } from "@/app/workspace/_components/FileTree";
-import { Request } from "@/app/workspace/_components/Request";
-import { Response } from "@/app/workspace/_components/Response";
 import { ReactNode } from "react";
+
+import { Request } from "./_components/Request";
+import { Response } from "./_components/Response";
+import { Sidebar } from "./_components/Sidebar";
 
 const Workspace = (): ReactNode => (
     <div className="w-full h-full flex flex-grow">
-        <FileTree />
+        <Sidebar />
         <Request />
         <Response />
     </div>

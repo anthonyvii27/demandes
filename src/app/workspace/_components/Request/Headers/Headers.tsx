@@ -1,8 +1,9 @@
 import { Section } from "@/app/workspace/_components/Request/_components/Section";
-import { InputField } from "@/app/workspace/_components/Request/Headers/InputField";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ReactElement, useState } from "react";
-import shortid from "shortid";
+import shortID from "shortid";
+
+import { InputField } from "./InputField";
 
 export type FieldSchema = {
     id: string;
@@ -14,7 +15,7 @@ export type FieldSchema = {
 const Headers = (): ReactElement => {
     const [fields, setFields] = useState<FieldSchema[] | []>([
         {
-            id: shortid.generate(),
+            id: shortID.generate(),
             header: "UserAgent",
             value: "demandes",
             checked: true,
@@ -25,7 +26,7 @@ const Headers = (): ReactElement => {
         setFields(prevState => [
             ...prevState,
             {
-                id: shortid.generate(),
+                id: shortID.generate(),
                 header: "",
                 value: "",
                 checked: true,
