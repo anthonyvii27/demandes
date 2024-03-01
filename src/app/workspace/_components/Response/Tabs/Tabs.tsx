@@ -6,6 +6,7 @@ const classNameBase =
     "w-max h-full px-3 text-sm text-gray-10 font-medium hover:text-white hover:bg-gray-60";
 const Tabs = (): ReactNode => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const tab = searchParams.get("responseTab") || "preview";
 
     const handleTabClick = (responseTab: string) => {
         setSearchParams({ responseTab });
@@ -16,20 +17,16 @@ const Tabs = (): ReactNode => {
             <button
                 className={cn(
                     classNameBase,
-                    searchParams.get("responseTab") === "response"
-                        ? "bg-gray-80 text-white"
-                        : "bg-transparent"
+                    tab === "preview" ? "bg-gray-80 text-white" : "bg-transparent"
                 )}
-                onClick={() => handleTabClick("response")}
+                onClick={() => handleTabClick("preview")}
             >
-                Response
+                Preview
             </button>
             <button
                 className={cn(
                     classNameBase,
-                    searchParams.get("responseTab") === "headers"
-                        ? "bg-gray-80 text-white"
-                        : "bg-transparent"
+                    tab === "headers" ? "bg-gray-80 text-white" : "bg-transparent"
                 )}
                 onClick={() => handleTabClick("headers")}
             >
@@ -38,9 +35,7 @@ const Tabs = (): ReactNode => {
             <button
                 className={cn(
                     classNameBase,
-                    searchParams.get("responseTab") === "cookies"
-                        ? "bg-gray-80 text-white"
-                        : "bg-transparent"
+                    tab === "cookies" ? "bg-gray-80 text-white" : "bg-transparent"
                 )}
                 onClick={() => handleTabClick("cookies")}
             >
@@ -49,9 +44,7 @@ const Tabs = (): ReactNode => {
             <button
                 className={cn(
                     classNameBase,
-                    searchParams.get("responseTab") === "logs"
-                        ? "bg-gray-80 text-white"
-                        : "bg-transparent"
+                    tab === "logs" ? "bg-gray-80 text-white" : "bg-transparent"
                 )}
                 onClick={() => handleTabClick("logs")}
             >

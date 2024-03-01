@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import { IoChevronBack } from "react-icons/io5";
-import { MdAdd, MdEdit, MdWorkspaces } from "react-icons/md";
+import { MdWorkspaces } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+import { CreateNewEnvironmentModal } from "./CreateNewEnvironmentModal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
+import { UpdateEnvironmentModal } from "./UpdateEnvironmentModal";
 
 const Header = (): ReactNode => (
     <div className="w-full h-max border-solid border-b-[1px] border-gray-40 py-[10px] px-[10px] flex flex-col gap-2">
@@ -27,12 +29,11 @@ const Header = (): ReactNode => (
                     </SelectContent>
                 </Select>
                 <div className="flex gap-[10px]">
-                    <button className="w-[25px] h-[25px] rounded-md bg-neon-pink text-white flex items-center justify-center pb-[2px] hover:bg-neon-pink/80">
-                        <MdEdit size={12} />
-                    </button>
-                    <button className="w-[25px] h-[25px] rounded-md bg-neon-pink text-white flex items-center justify-center pb-[2px] hover:bg-neon-pink/80">
-                        <MdAdd size={12} />
-                    </button>
+                    <UpdateEnvironmentModal
+                        name="Production"
+                        envs={`{\n\t"example": "value",\n\t"example2": "value2"\n}`}
+                    />
+                    <CreateNewEnvironmentModal />
                 </div>
             </div>
         </div>
