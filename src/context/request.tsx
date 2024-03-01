@@ -1,41 +1,31 @@
-import {
-    AuthenticationBasic,
-    AuthenticationBearer,
-    AuthenticationSchema,
-    BodyJSONSchema,
-    BodyOtherSchema,
-    BodySchema,
-    BodyXMLSchema,
-    BodyYAMLSchema,
-    HeaderParameter,
-    HTTPMethod,
-    QueryParameter,
-    RequestSchemaType,
-} from "@/app/types/request";
+import { HTTPMethod, RequestSchemaType } from "@/app/schemas/request";
+import { BodySchema } from "@/app/schemas/request.body";
+import { HeaderSchema } from "@/app/schemas/request.headers";
+import { QueryParameterSchema } from "@/app/schemas/request.query";
 import { createContext, ReactNode, useState } from "react";
 
 type RequestProviderType = {
-    request: RequestSchemaType<any, any>;
+    request: RequestSchemaType;
     handleBaseURL: (baseUrl: string) => void;
     handleHTTPMethod: (method: HTTPMethod) => void;
-    handleQueryParameters: (queryParams: QueryParameter[]) => void;
-    handleBody: <B>(body: BodySchema<B>) => void;
-    handleAuthentication: <A>(authentication: AuthenticationSchema<A>) => void;
-    handleHeadersParameters: (headers: HeaderParameter[]) => void;
+    handleQueryParameters: (queryParams: QueryParameterSchema[]) => void;
+    handleBody: (body: BodySchema) => void;
+    // handleAuthentication: any;
+    handleHeadersParameters: (headers: HeaderSchema[]) => void;
 };
+
+type RequestType = RequestSchemaType;
 
 export const RequestContext = createContext<RequestProviderType | null>(null);
 
-type RequestType = RequestSchemaType<
-    BodyJSONSchema | BodyXMLSchema | BodyYAMLSchema | BodyOtherSchema,
-    AuthenticationBasic | AuthenticationBearer
->;
-
 const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
     const [request, setRequest] = useState<RequestType>({
-        method: "GET",
         baseUrl: "",
+        method: HTTPMethod.GET,
         queryParams: [],
+        body: null,
+        authentication: null,
+        headers: [],
     });
 
     function handleBaseURL(baseUrl: string) {
@@ -46,19 +36,20 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         setRequest(prevState => ({ ...prevState, method }));
     }
 
-    function handleQueryParameters(queryParams: QueryParameter[]): void {
+    function handleQueryParameters(queryParams: QueryParameterSchema[]): void {
         setRequest(prevState => ({ ...prevState, queryParams }));
     }
 
-    function handleBody<B>(body: BodySchema<B>): void {
+    // OK
+    function handleBody(body: BodySchema): void {
         setRequest(prevState => ({ ...prevState, body }));
     }
 
-    function handleAuthentication<A>(authentication: AuthenticationSchema<A>): void {
-        setRequest(prevState => ({ ...prevState, authentication }));
-    }
+    // function handleAuthentication<A>(authentication: AuthenticationSchema<A>): void {
+    //     setRequest((prevState: any) => ({ ...prevState, authentication }));
+    // }
 
-    function handleHeadersParameters(headers: HeaderParameter[]): void {
+    function handleHeadersParameters(headers: HeaderSchema[]): void {
         setRequest(prevState => ({ ...prevState, headers }));
     }
 
@@ -70,7 +61,7 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
                 handleHTTPMethod,
                 handleQueryParameters,
                 handleBody,
-                handleAuthentication,
+                // handleAuthentication,
                 handleHeadersParameters,
             }}
         >

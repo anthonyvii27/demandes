@@ -1,4 +1,4 @@
-import { HTTPMethod } from "@/app/types/request";
+import { HTTPMethod } from "@/app/schemas/request";
 import { Button } from "@/components/ui/Button";
 import { RequestContext } from "@/context/request";
 import { ChangeEvent, ReactNode, useContext } from "react";
