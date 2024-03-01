@@ -9,7 +9,7 @@ const Tree = (): ReactElement => {
     useHotkeys("mod+p", () => filterInputRef.current?.focus());
 
     return (
-        <section className="w-full h-full flex flex-col gap-2 p-2">
+        <section className="w-full h-full flex flex-col gap-2 p-3">
             <div className="w-full flex items-center gap-2">
                 <Input placeholder="Filter [⌘+P]" ref={filterInputRef} />
                 <Select defaultValue="ascending">
@@ -26,8 +26,6 @@ const Tree = (): ReactElement => {
                     </Select.Content>
                 </Select>
             </div>
-
-            <p>Tree</p>
         </section>
     );
 };
