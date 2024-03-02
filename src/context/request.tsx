@@ -1,27 +1,22 @@
-import { HTTPMethod, RequestSchemaType } from "@/app/schemas/request";
-import { BodySchema } from "@/app/schemas/request.body";
-import { HeaderSchema } from "@/app/schemas/request.headers";
-import { QueryParameterSchema } from "@/app/schemas/request.query";
+import { HTTP_METHODS } from "@/app/constants";
 import { createContext, ReactNode, useState } from "react";
 
 type RequestProviderType = {
-    request: RequestSchemaType;
+    request: RequestSchema;
     handleBaseURL: (baseUrl: string) => void;
-    handleHTTPMethod: (method: HTTPMethod) => void;
-    handleQueryParameters: (queryParams: QueryParameterSchema[]) => void;
-    handleBody: (body: BodySchema) => void;
-    // handleAuthentication: any;
-    handleHeadersParameters: (headers: HeaderSchema[]) => void;
+    handleHTTPMethod: (method: HTTP_METHODS) => void;
+    AddQueryParameter: (queryParam: QueryParameter) => void;
+    UpdateQueryParameter: (id: string, queryParam: QueryParameter) => void;
+    RemoveQueryParameter: (id: string) => void;
+    RemoveAllQueryParameters: () => void;
 };
-
-type RequestType = RequestSchemaType;
 
 export const RequestContext = createContext<RequestProviderType | null>(null);
 
 const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
-    const [request, setRequest] = useState<RequestType>({
+    const [request, setRequest] = useState<RequestSchema>({
         baseUrl: "",
-        method: HTTPMethod.GET,
+        method: HTTP_METHODS.GET,
         queryParams: [],
         body: null,
         authentication: null,
@@ -29,29 +24,39 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
     });
 
     function handleBaseURL(baseUrl: string) {
-        setRequest((prevState: RequestType) => ({ ...prevState, baseUrl }));
+        setRequest((prevState: RequestSchema) => ({ ...prevState, baseUrl }));
     }
 
-    function handleHTTPMethod(method: HTTPMethod): void {
-        setRequest(prevState => ({ ...prevState, method }));
+    function handleHTTPMethod(method: HTTP_METHODS): void {
+        setRequest((prevState: RequestSchema) => ({ ...prevState, method }));
     }
 
-    function handleQueryParameters(queryParams: QueryParameterSchema[]): void {
-        setRequest(prevState => ({ ...prevState, queryParams }));
-    }
+    const AddQueryParameter = (queryParam: QueryParameter): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            queryParams: [...prevState.queryParams, queryParam],
+        }));
+    };
 
-    // OK
-    function handleBody(body: BodySchema): void {
-        setRequest(prevState => ({ ...prevState, body }));
-    }
+    const UpdateQueryParameter = (id: string, queryParam: QueryParameter): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            queryParams: prevState.queryParams.map((param: QueryParameter) =>
+                param.id === id ? queryParam : param
+            ),
+        }));
+    };
 
-    // function handleAuthentication<A>(authentication: AuthenticationSchema<A>): void {
-    //     setRequest((prevState: any) => ({ ...prevState, authentication }));
-    // }
+    const RemoveQueryParameter = (id: string): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            queryParams: prevState.queryParams.filter((param: QueryParameter) => param.id !== id),
+        }));
+    };
 
-    function handleHeadersParameters(headers: HeaderSchema[]): void {
-        setRequest(prevState => ({ ...prevState, headers }));
-    }
+    const RemoveAllQueryParameters = (): void => {
+        setRequest((prevState: RequestSchema) => ({ ...prevState, queryParams: [] }));
+    };
 
     return (
         <RequestContext.Provider
@@ -59,10 +64,10 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
                 request,
                 handleBaseURL,
                 handleHTTPMethod,
-                handleQueryParameters,
-                handleBody,
-                // handleAuthentication,
-                handleHeadersParameters,
+                AddQueryParameter,
+                UpdateQueryParameter,
+                RemoveQueryParameter,
+                RemoveAllQueryParameters,
             }}
         >
             {children}

@@ -2,7 +2,8 @@ import { Section } from "@/app/workspace/_components/Request/_components/Section
 import { InputField } from "@/app/workspace/_components/Request/Params/InputField";
 import { UrlPreview } from "@/app/workspace/_components/Request/Params/UrlPreview";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { ReactElement, useState } from "react";
+import { RequestContext } from "@/context/request";
+import { ReactElement, useContext } from "react";
 import shortID from "shortid";
 
 export type FieldSchema = {
@@ -13,29 +14,28 @@ export type FieldSchema = {
 };
 
 const Params = (): ReactElement => {
-    const [fields, setFields] = useState<FieldSchema[] | []>([]);
+    const requestCtx = useContext(RequestContext);
 
     const handleAddField = (): void => {
-        setFields(prevState => [
-            ...prevState,
-            {
-                id: shortID.generate(),
-                name: "",
-                value: "",
-                checked: true,
-            },
-        ]);
+        requestCtx?.AddQueryParameter({
+            id: shortID.generate(),
+            name: "",
+            value: "",
+            checked: true,
+        });
     };
 
-    const handleDeleteField = (id: string): void => {
-        setFields(prevState => prevState.filter((field: FieldSchema) => field.id !== id));
-    };
+    const handleUpdateField = (id: string, value: QueryParameter): void =>
+        requestCtx?.UpdateQueryParameter(id, value);
 
-    const handleDeleteAllFields = (): void => setFields([]);
+    const handleDeleteField = (id: string): void => requestCtx?.RemoveQueryParameter(id);
+
+    const handleDeleteAllFields = (): void => requestCtx?.RemoveAllQueryParameters();
 
     return (
         <Section>
-            <UrlPreview>https://api.example.com/v1/api/users/1?name=John&age=30</UrlPreview>
+            <UrlPreview />
+
             <div className="flex justify-between items-center">
                 <SectionTitle>QUERY PARAMETERS</SectionTitle>
 
@@ -55,8 +55,13 @@ const Params = (): ReactElement => {
                 </div>
             </div>
 
-            {fields?.map((field: FieldSchema) => (
-                <InputField {...field} key={field.id} handleDeleteField={handleDeleteField} />
+            {requestCtx?.request.queryParams?.map(field => (
+                <InputField
+                    {...field}
+                    key={field.id}
+                    handleUpdateField={handleUpdateField}
+                    handleDeleteField={handleDeleteField}
+                />
             ))}
         </Section>
     );

@@ -2,6 +2,7 @@ import { Body } from "@/app/layout/Body";
 import { Footer } from "@/app/layout/Footer";
 import { Header } from "@/app/layout/Header";
 import { Router } from "@/app/routes";
+import { Toaster } from "@/components/ui/Toaster";
 import { RequestProvider } from "@/context/request";
 import { ReactNode } from "react";
 
@@ -11,6 +12,7 @@ const App = (): ReactNode => (
             <Header />
             <Body>
                 <Router />
+                <Toaster />
             </Body>
             <Footer />
         </RequestProvider>

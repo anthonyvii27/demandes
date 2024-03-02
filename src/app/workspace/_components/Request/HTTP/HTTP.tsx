@@ -1,4 +1,4 @@
-import { HTTPMethod } from "@/app/schemas/request";
+import { HTTP_METHODS } from "@/app/constants";
 import { Button } from "@/components/ui/Button";
 import { RequestContext } from "@/context/request";
 import { ChangeEvent, ReactNode, useContext } from "react";
@@ -18,7 +18,7 @@ const HTTP = (): ReactNode => {
             <Select
                 defaultValue="GET"
                 value={requestCtx?.request.method}
-                onValueChange={method => requestCtx?.handleHTTPMethod(method as HTTPMethod)}
+                onValueChange={method => requestCtx?.handleHTTPMethod(method as HTTP_METHODS)}
             >
                 <SelectTrigger>
                     <SelectValue />
