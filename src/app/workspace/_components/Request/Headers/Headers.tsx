@@ -1,6 +1,7 @@
 import { Section } from "@/app/workspace/_components/Request/_components/Section";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { ReactElement, useState } from "react";
+import { RequestContext } from "@/context/request";
+import { ReactElement, useContext } from "react";
 import shortID from "shortid";
 
 import { InputField } from "./InputField";
@@ -13,32 +14,27 @@ export type FieldSchema = {
 };
 
 const Headers = (): ReactElement => {
-    const [fields, setFields] = useState<FieldSchema[] | []>([
-        {
-            id: shortID.generate(),
-            header: "UserAgent",
-            value: "demandes",
-            checked: true,
-        },
-    ]);
+    const requestCtx = useContext(RequestContext);
 
     const handleAddField = (): void => {
-        setFields(prevState => [
-            ...prevState,
-            {
-                id: shortID.generate(),
-                header: "",
-                value: "",
-                checked: true,
-            },
-        ]);
+        requestCtx?.AddHeader({
+            id: shortID.generate(),
+            header: "",
+            value: "",
+            checked: true,
+        });
     };
+
+    const handleUpdateField = (id: string, value: Header): void =>
+        requestCtx?.UpdateHeader(id, value);
 
     const handleDeleteField = (id: string): void => {
-        setFields(prevState => prevState.filter((field: FieldSchema) => field.id !== id));
+        requestCtx?.RemoveHeader(id);
     };
 
-    const handleDeleteAllFields = (): void => setFields([]);
+    const handleDeleteAllFields = (): void => {
+        requestCtx?.RemoveAllHeaders();
+    };
 
     return (
         <Section>
@@ -61,8 +57,13 @@ const Headers = (): ReactElement => {
                 </div>
             </div>
 
-            {fields?.map((field: FieldSchema) => (
-                <InputField {...field} key={field.id} handleDeleteField={handleDeleteField} />
+            {requestCtx?.request.headers?.map((field: Header) => (
+                <InputField
+                    {...field}
+                    key={field.id}
+                    handleUpdateField={handleUpdateField}
+                    handleDeleteField={handleDeleteField}
+                />
             ))}
         </Section>
     );

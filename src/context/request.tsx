@@ -9,6 +9,10 @@ type RequestProviderType = {
     UpdateQueryParameter: (id: string, queryParam: QueryParameter) => void;
     RemoveQueryParameter: (id: string) => void;
     RemoveAllQueryParameters: () => void;
+    AddHeader: (header: Header) => void;
+    UpdateHeader: (id: string, header: Header) => void;
+    RemoveHeader: (id: string) => void;
+    RemoveAllHeaders: () => void;
 };
 
 export const RequestContext = createContext<RequestProviderType | null>(null);
@@ -23,13 +27,11 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         headers: [],
     });
 
-    function handleBaseURL(baseUrl: string) {
+    const handleBaseURL = (baseUrl: string): void =>
         setRequest((prevState: RequestSchema) => ({ ...prevState, baseUrl }));
-    }
 
-    function handleHTTPMethod(method: HTTP_METHODS): void {
+    const handleHTTPMethod = (method: HTTP_METHODS): void =>
         setRequest((prevState: RequestSchema) => ({ ...prevState, method }));
-    }
 
     const AddQueryParameter = (queryParam: QueryParameter): void => {
         setRequest((prevState: RequestSchema) => ({
@@ -58,6 +60,31 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         setRequest((prevState: RequestSchema) => ({ ...prevState, queryParams: [] }));
     };
 
+    const AddHeader = (header: Header): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            headers: [...prevState.headers, header],
+        }));
+    };
+
+    const UpdateHeader = (id: string, header: Header): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            headers: prevState.headers.map((h: Header) => (h.id === id ? header : h)),
+        }));
+    };
+
+    const RemoveHeader = (id: string): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            headers: prevState.headers.filter((h: Header) => h.id !== id),
+        }));
+    };
+
+    const RemoveAllHeaders = (): void => {
+        setRequest((prevState: RequestSchema) => ({ ...prevState, headers: [] }));
+    };
+
     return (
         <RequestContext.Provider
             value={{
@@ -68,6 +95,10 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
                 UpdateQueryParameter,
                 RemoveQueryParameter,
                 RemoveAllQueryParameters,
+                AddHeader,
+                UpdateHeader,
+                RemoveHeader,
+                RemoveAllHeaders,
             }}
         >
             {children}
