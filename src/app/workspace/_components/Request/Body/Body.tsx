@@ -15,11 +15,22 @@ const Body = (): ReactElement => (
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="json">JSON</SelectItem>
-                    <SelectItem value="multipart-form">Multipart Form</SelectItem>
-                    <SelectItem value="xml">XML</SelectItem>
-                    <SelectItem value="yaml">YAML</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                    <SelectItem value="no-body">No Body</SelectItem>
+                    <SelectItem value="multipart-form" disabled>
+                        Multipart Form
+                    </SelectItem>
+                    <SelectItem value="xml" disabled>
+                        XML
+                    </SelectItem>
+                    <SelectItem value="yaml" disabled>
+                        YAML
+                    </SelectItem>
+
+                    <SelectItem value="other" disabled>
+                        Other
+                    </SelectItem>
+                    <SelectItem value="no-body" disabled>
+                        No Body
+                    </SelectItem>
                 </SelectContent>
             </Select>
         </div>

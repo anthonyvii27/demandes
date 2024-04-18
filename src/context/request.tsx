@@ -9,6 +9,7 @@ type RequestProviderType = {
     UpdateQueryParameter: (id: string, queryParam: QueryParameter) => void;
     RemoveQueryParameter: (id: string) => void;
     RemoveAllQueryParameters: () => void;
+    HandleAuthentication: (auth: any) => void;
     AddHeader: (header: Header) => void;
     UpdateHeader: (id: string, header: Header) => void;
     RemoveHeader: (id: string) => void;
@@ -60,6 +61,13 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         setRequest((prevState: RequestSchema) => ({ ...prevState, queryParams: [] }));
     };
 
+    const HandleAuthentication = (auth: any): void => {
+        setRequest((prevState: RequestSchema) => ({
+            ...prevState,
+            authentication: auth,
+        }));
+    };
+
     const AddHeader = (header: Header): void => {
         setRequest((prevState: RequestSchema) => ({
             ...prevState,
@@ -95,6 +103,7 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
                 UpdateQueryParameter,
                 RemoveQueryParameter,
                 RemoveAllQueryParameters,
+                HandleAuthentication,
                 AddHeader,
                 UpdateHeader,
                 RemoveHeader,
