@@ -1,4 +1,5 @@
 import { HTTP_METHODS } from "@/app/constants";
+import axios, { AxiosResponse } from "axios";
 import { createContext, ReactNode, useState } from "react";
 
 type RequestProviderType = {
@@ -14,6 +15,9 @@ type RequestProviderType = {
     UpdateHeader: (id: string, header: Header) => void;
     RemoveHeader: (id: string) => void;
     RemoveAllHeaders: () => void;
+    HandleRequest: () => Promise<void>;
+    GetResponseHeaders: () => { value: string; key: string }[] | null;
+    response: (AxiosResponse & { duration: number }) | null;
 };
 
 export const RequestContext = createContext<RequestProviderType | null>(null);
@@ -27,6 +31,8 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         authentication: null,
         headers: [],
     });
+
+    const [response, setResponse] = useState<(AxiosResponse & { duration: number }) | null>(null);
 
     const handleBaseURL = (baseUrl: string): void =>
         setRequest((prevState: RequestSchema) => ({ ...prevState, baseUrl }));
@@ -93,6 +99,47 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
         setRequest((prevState: RequestSchema) => ({ ...prevState, headers: [] }));
     };
 
+    const HandleRequest = async (): Promise<void> => {
+        const startTime = performance.now();
+        const queryParameters = request.queryParams
+            .map(param => {
+                if (param.checked) {
+                    if (param.name !== "" && param.value !== "") {
+                        return `${param.name}=${param.value}`;
+                    }
+                }
+
+                return "";
+            })
+            .filter(Boolean)
+            .join("&");
+
+        try {
+            const res = await axios.request({
+                method: request.method,
+                url: `${request.baseUrl}?${queryParameters}`,
+            });
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            setResponse({ ...res, duration });
+        } catch (err) {
+            const endTime = performance.now();
+            const duration = endTime - startTime;
+            // @ts-ignore
+            setResponse({ ...err.response, duration });
+        }
+    };
+
+    const GetResponseHeaders = (): { value: string; key: string }[] | null => {
+        if (response?.headers) {
+            return Object.entries(response?.headers).map(([key, value]) => {
+                return { key, value };
+            });
+        }
+
+        return null;
+    };
+
     return (
         <RequestContext.Provider
             value={{
@@ -108,6 +155,9 @@ const RequestProvider = ({ children }: { children: ReactNode }): ReactNode => {
                 UpdateHeader,
                 RemoveHeader,
                 RemoveAllHeaders,
+                HandleRequest,
+                GetResponseHeaders,
+                response,
             }}
         >
             {children}

@@ -4,7 +4,7 @@ import { Header } from "./Header";
 import { Tree } from "./Tree";
 
 const Sidebar = (): ReactNode => (
-    <section className="w-[300px]">
+    <section className="w-full">
         <Header />
         <Tree />
     </section>

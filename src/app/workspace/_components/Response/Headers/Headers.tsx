@@ -6,41 +6,35 @@ import {
     TableRow,
     TableCell,
 } from "@/components/ui/Table";
-import { ReactNode } from "react";
+import { RequestContext } from "@/context/request";
+import { ReactNode, useContext } from "react";
 
-const Headers = (): ReactNode => (
-    <div className="w-full h-[calc(100vh-160px)] overflow-x-hidden overflow-y-scroll">
-        <Table>
-            <TableHeader>
-                <TableRow>
-                    <TableHead className="w-30">NAME</TableHead>
-                    <TableHead>VALUE</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
-                <TableRow>
-                    <TableCell className="font-semibold">date</TableCell>
-                    <TableCell className="text-lighter-gray">
-                        Sun, 14 Nov 2021 13:06:52 GMT
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell className="font-semibold">content-type</TableCell>
-                    <TableCell className="text-lighter-gray">
-                        application/json; charset=utf-8
-                    </TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell className="font-semibold">content-length</TableCell>
-                    <TableCell className="text-lighter-gray">247</TableCell>
-                </TableRow>
-                <TableRow>
-                    <TableCell className="font-semibold">cf-cache-status</TableCell>
-                    <TableCell className="text-lighter-gray">DYNAMIC</TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-    </div>
-);
+const Headers = (): ReactNode => {
+    const requestCtx = useContext(RequestContext);
+    const headers = requestCtx?.GetResponseHeaders();
+
+    return (
+        <div className="w-full h-[calc(100vh-160px)] overflow-x-hidden overflow-y-scroll">
+            <Table className="h-[calc(100vh-165px)]">
+                <TableHeader>
+                    <TableRow>
+                        <TableHead className="pr-[100px]">NAME</TableHead>
+                        <TableHead>VALUE</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {headers?.map(header => (
+                        <TableRow>
+                            <TableCell className="font-semibold">{header.key}</TableCell>
+                            <TableCell className="text-lighter-gray text-wrap">
+                                {header.value}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </div>
+    );
+};
 
 export { Headers };

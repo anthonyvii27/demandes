@@ -18,7 +18,7 @@ const Response = (): ReactNode => {
     const tab = searchParams.get("responseTab") || "preview";
 
     return (
-        <section className="w-[400px] overflow-hidden">
+        <section className="w-full overflow-hidden">
             <Status />
             <Tabs />
             {VIEWS[tab as keyof typeof VIEWS]}

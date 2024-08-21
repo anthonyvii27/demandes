@@ -50,7 +50,7 @@ const HTTP = (): ReactNode => {
 
             <InputField value={requestCtx?.request.baseUrl} onChange={handleField} />
 
-            <Button>
+            <Button onClick={requestCtx?.HandleRequest}>
                 <LuSend size={13} />
                 Send
             </Button>
